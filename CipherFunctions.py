@@ -6,6 +6,8 @@ from WordBinaries import *
 #Stage 2 text permüte edilmiş durumda ve düz string formunda hala
 #Stage 3 de artık 8 bit uzunluğunda her bir elemanı olan array çıkıyor
 #Stage 4 her bir elemanı 8 bit uzunluğunda ve shiftlenmiş olarak duruyor
+#
+
 
 # Return string of reading elements
 # Stage 1
@@ -103,8 +105,20 @@ def CipherSequence(shifted_array=[],cipher_key=""):
             right_nibble.append(shifted_array[i])
     binary_key = ConvertCharacterToBinaries(key=cipher_key)
     binary_permuted_key = TakeInitialPermutationBinaryText(binary_key,"02561374","01346275")
+    #First XOR step
+    for i in range(len(left_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(left_nibble[i][i2])^int(binary_permuted_key[0][i2]))
+        left_nibble[i] = xor_bit
+    for i in range(len(right_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(right_nibble[i][i2])^int(binary_permuted_key[1][i2]))
+        right_nibble[i] = xor_bit
 
-    pass
+
+        pass
 
 
 #Returns Array which has two elements, each elements contain 8 bit data of key
@@ -184,3 +198,7 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
     #                 for i3 in range(8):
     #                     #xor_array.append((int(text_binary[i3])) ^ (int(binary_key["first"][i3])))
     #                     pass
+
+arrayn = ["01","02"]
+arrayn[0]="03"
+print(arrayn)
