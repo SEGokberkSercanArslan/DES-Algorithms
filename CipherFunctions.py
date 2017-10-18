@@ -24,11 +24,6 @@ def ReadFromFile(file_name="default.txt"):
 def TakeInitialPermutationString(key_text="", key_combination="0123456789"):
     key_text.split()
     Number_of_iterations = len(key_text)
-    print("iterasyon sayısı")
-    print(Number_of_iterations)#Kontrol
-    print(key_text)#Kontrol
-
-
     permuted_text = []
 
     if Number_of_iterations%10 == 0 :
@@ -41,14 +36,10 @@ def TakeInitialPermutationString(key_text="", key_combination="0123456789"):
     else :
         lenght_text = (len(key_text)%10)
         key_text += backup_words[0:lenght_text]
-        print(Number_of_iterations//10)
         for i in range((Number_of_iterations//10)+1):
-            print("+i nin değeri {}".format(i+1))#Kontrol
             for i2 in range(10):
-                print("i2 counter = {}".format(i2))
                 position = int(key_combination[i2])
                 permuted_text.append(key_text[(10 * i) + position])
-                print(permuted_text)
 
     print("10 Character data permuted \n")
 
@@ -108,10 +99,6 @@ def EightBitsLeftShiftRotate(eight_data=[],shift_ratio=None,iteration=None):
                 eight_bit_string += "".join(str(eight_data[((i2 - shift_ratio)) % 8]))
         print("Left Shift Rotate Complete")
         return eight_bit_string
-
-
-
-
 
 # Stage 5
 def CipherSequence(shifted_array=[],cipher_key=""):
@@ -190,8 +177,7 @@ def TakeInitialPermutationBinaryText(binary_text=[],key_combination_first="02461
         permutation_array.append(permutation_string)
     return permutation_array
 
-"Diğer Fonksiyonlar"
-
+"Main Cipher Functions"
 def CipherTextNew(file_name = "Default.txt",key="ru",):
     "String Var"
     plain_text = ""
@@ -218,27 +204,3 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
     cipher_text = CipherSequence(shifted_array=binary_plain_text_shifted,cipher_key=key)
 
     return cipher_text
-
-    # if size_of_first_step == 0 :
-    #     for i in range(size_of_ten_recursion):
-    #       for i2 in range(10):
-    #
-    #           for i3 in range(8):
-    #               cipher_text.append((int(shifted_text[i3])) ^ (int(binary_key["first"][i3])))
-
-    # else :
-    #     for i in range(size_of_ten_recursion+1):
-    #         if i <= size_of_ten_recursion:
-    #             for i2 in range(10):
-    #                 for i3 in range(8):
-    #                     #xor_array.append((int(text_binary[i3])) ^ (int(binary_key["first"][i3])))
-    #                     pass
-    #         else:
-    #             for i3 in range(size_of_ten_recursion):
-    #                 for i3 in range(8):
-    #                     #xor_array.append((int(text_binary[i3])) ^ (int(binary_key["first"][i3])))
-    #                     pass
-
-arrayn = ["01","02"]
-print((-5)%8)
-print(len(arrayn[0]))
