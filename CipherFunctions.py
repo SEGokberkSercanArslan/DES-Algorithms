@@ -31,7 +31,7 @@ def TakeInitialPermutationString(key_text="", key_combination="0123456789"):
             for i2 in range(10):
                 position = int(key_combination[i2])
                 permuted_text.append(key_text[10 * i + position])
-        print("10 Character data permuted \n")
+        print("10 Block Character data permuted \n")
 
     else :
         lenght_text = (len(key_text)%10)
@@ -41,7 +41,7 @@ def TakeInitialPermutationString(key_text="", key_combination="0123456789"):
                 position = int(key_combination[i2])
                 permuted_text.append(key_text[(10 * i) + position])
 
-    print("10 Character data permuted \n")
+    print("10 Block Character data permuted \n")
 
     return "".join(permuted_text)
 
@@ -56,7 +56,7 @@ def ConvertDataToBinaries(data=""):
             binary_data.append(word_binaries[data[i]])
         except:
             binary_data.append(capital_word_binaries[data[i]])
-    print("10 Character data converted to binary format\n")
+    print("Character data converted to binary format\n")
     return binary_data
 
 # Right Shift rotate 8 bit binaries
@@ -125,10 +125,10 @@ def CipherSequence(shifted_array=[],cipher_key=""):
         for i2 in range(8):
             xor_bit += str(int(right_nibble[i][i2])^int(binary_permuted_key[0][i2]))
         right_nibble[i] = xor_bit
-    print(binary_permuted_key)
+
     binary_permuted_key[0] = EightBitsLeftShiftRotate(binary_permuted_key[0],3,1)
     binary_permuted_key[1] = EightBitsRightShiftRotate(binary_permuted_key[1],5,1)
-    print(binary_permuted_key)
+
     #Second XOR operations
     for i in range(len(left_nibble)):
         xor_bit = ""
@@ -140,6 +140,7 @@ def CipherSequence(shifted_array=[],cipher_key=""):
         for i2 in range(8):
             xor_bit += str(int(right_nibble[i][i2]) ^ int(binary_permuted_key[1][i2]))
         right_nibble[i] = xor_bit
+    print("XOR operations complete...")
     #re-produce text togather
     for i in range(len(left_nibble)):
         union_text.append(right_nibble[i])
