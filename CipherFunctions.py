@@ -70,25 +70,40 @@ def ConvertDataToBinaries(data=""):
 
 # Right Shift rotate 8 bit binaries
 # Stage 4
-def EightBitsRightShiftRotate(eight_data=[],shift_ratio=None):
+def EightBitsRightShiftRotate(eight_data=[],shift_ratio=None,iteration=None):
     shift_list = []
-    for i in range (len(eight_data)):
-        eight_bit_string = ""
-        for i2 in range(8):
-            eight_bit_string += "".join(str(eight_data[i][((i2+shift_ratio))%8]))
-        shift_list.append(eight_bit_string)
+    if iteration == None:
+        for i in range (len(eight_data)):
+            eight_bit_string = ""
+            for i2 in range(8):
+                eight_bit_string += "".join(str(eight_data[i][((i2+shift_ratio))%8]))
+            shift_list.append(eight_bit_string)
+    else:
+        for i in range(iteration):
+            eight_bit_string = ""
+            for i2 in range(8):
+                eight_bit_string += "".join(str(eight_data[i][((i2 + shift_ratio)) % 8]))
+            shift_list.append(eight_bit_string)
+    print("Right Shift Rotate Complete")
     return shift_list
 
 #Left shift rotate 8 bit binaries
 #Düzeltildi
-def EightBitsLeftShiftRotate(eight_data=[],shift_ratio=None):
+def EightBitsLeftShiftRotate(eight_data=[],shift_ratio=None,iteration=None):
     shift_list = []
-    for i in range(len(eight_data)):
-        eight_bit_string = ""
-        for i2 in range(8):
-            eight_bit_string += "".join(str(eight_data[i][((i2 - shift_ratio)) % 8]))
-        shift_list.append(eight_bit_string)
-        print(shift_list)
+    if iteration == None:
+        for i in range(len(eight_data)):
+            eight_bit_string = ""
+            for i2 in range(8):
+                eight_bit_string += "".join(str(eight_data[i][((i2 - shift_ratio)) % 8]))
+            shift_list.append(eight_bit_string)
+    else:
+        for i in range(iteration):
+            eight_bit_string = ""
+            for i2 in range(8):
+                eight_bit_string += "".join(str(eight_data[i][((i2 - shift_ratio)) % 8]))
+            shift_list.append(eight_bit_string)
+    print("Left Shift Rotate Complete")
     return shift_list
 
 
@@ -96,6 +111,7 @@ def EightBitsLeftShiftRotate(eight_data=[],shift_ratio=None):
 def CipherSequence(shifted_array=[],cipher_key=""):
     left_nibble  = []
     right_nibble = []
+    union_text = []
     binary_key = ""
     #Even right odd left
     for i in range (len(shifted_array)):
@@ -109,16 +125,33 @@ def CipherSequence(shifted_array=[],cipher_key=""):
     for i in range(len(left_nibble)):
         xor_bit = ""
         for i2 in range(8):
-            xor_bit += str(int(left_nibble[i][i2])^int(binary_permuted_key[0][i2]))
+            xor_bit += str(int(left_nibble[i][i2])^int(binary_permuted_key[1][i2]))
         left_nibble[i] = xor_bit
     for i in range(len(right_nibble)):
         xor_bit = ""
         for i2 in range(8):
-            xor_bit += str(int(right_nibble[i][i2])^int(binary_permuted_key[1][i2]))
+            xor_bit += str(int(right_nibble[i][i2])^int(binary_permuted_key[0][i2]))
         right_nibble[i] = xor_bit
-
-
-        pass
+    print(binary_permuted_key)
+    binary_permuted_key[0] = EightBitsLeftShiftRotate(binary_permuted_key[0],3,1)
+    binary_permuted_key[1] = EightBitsRightShiftRotate(binary_permuted_key[1],5,1)
+    #Second XOR operations
+    for i in range(len(left_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(left_nibble[i][i2]) ^ int(binary_permuted_key[0][i2]))
+        left_nibble[i] = xor_bit
+    for i in range(len(right_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(right_nibble[i][i2]) ^ int(binary_permuted_key[1][i2]))
+        right_nibble[i] = xor_bit
+    #re-produce text togather
+    for i in range(len(left_nibble)):
+        union_text.append(right_nibble[i])
+        union_text.append(left_nibble[i])
+    print(union_text)
+    return union_text
 
 
 #Returns Array which has two elements, each elements contain 8 bit data of key
@@ -200,5 +233,5 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
     #                     pass
 
 arrayn = ["01","02"]
-arrayn[0]="03"
-print(arrayn)
+print((-5)%8)
+print(len(arrayn[0]))
