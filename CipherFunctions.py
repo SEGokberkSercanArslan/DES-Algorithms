@@ -78,14 +78,16 @@ def EightBitsRightShiftRotate(eight_data=[],shift_ratio=None,iteration=None):
             for i2 in range(8):
                 eight_bit_string += "".join(str(eight_data[i][((i2+shift_ratio))%8]))
             shift_list.append(eight_bit_string)
-    else:
+        print("Right Shift Rotate Complete")
+        return shift_list
+    else: #True, only if shift key attribute
         for i in range(iteration):
             eight_bit_string = ""
             for i2 in range(8):
-                eight_bit_string += "".join(str(eight_data[i][((i2 + shift_ratio)) % 8]))
-            shift_list.append(eight_bit_string)
-    print("Right Shift Rotate Complete")
-    return shift_list
+                eight_bit_string += "".join(str(eight_data[((i2 + shift_ratio)) % 8]))
+        print("Right Shift Rotate Complete")
+        return eight_bit_string
+
 
 #Left shift rotate 8 bit binaries
 #Düzeltildi
@@ -97,14 +99,18 @@ def EightBitsLeftShiftRotate(eight_data=[],shift_ratio=None,iteration=None):
             for i2 in range(8):
                 eight_bit_string += "".join(str(eight_data[i][((i2 - shift_ratio)) % 8]))
             shift_list.append(eight_bit_string)
-    else:
+        print("Left Shift Rotate Complete")
+        return shift_list
+    else: #True, only if shift key attribute
         for i in range(iteration):
             eight_bit_string = ""
             for i2 in range(8):
-                eight_bit_string += "".join(str(eight_data[i][((i2 - shift_ratio)) % 8]))
-            shift_list.append(eight_bit_string)
-    print("Left Shift Rotate Complete")
-    return shift_list
+                eight_bit_string += "".join(str(eight_data[((i2 - shift_ratio)) % 8]))
+        print("Left Shift Rotate Complete")
+        return eight_bit_string
+
+
+
 
 
 # Stage 5
@@ -135,6 +141,7 @@ def CipherSequence(shifted_array=[],cipher_key=""):
     print(binary_permuted_key)
     binary_permuted_key[0] = EightBitsLeftShiftRotate(binary_permuted_key[0],3,1)
     binary_permuted_key[1] = EightBitsRightShiftRotate(binary_permuted_key[1],5,1)
+    print(binary_permuted_key)
     #Second XOR operations
     for i in range(len(left_nibble)):
         xor_bit = ""

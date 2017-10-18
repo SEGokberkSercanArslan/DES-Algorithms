@@ -13,4 +13,5 @@ from CipherFunctions import *
 # # print(len(bin_dat))
 # CipherText(text_binary=bin_dat,key="ka")
 
-CipherTextNew(file_name="tmp.txt",key="rm")
+leng = CipherTextNew(file_name="tmp.txt",key="rm")
+print(len(leng))
