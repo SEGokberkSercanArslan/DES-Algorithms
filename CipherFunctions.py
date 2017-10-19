@@ -126,8 +126,10 @@ def CipherSequence(shifted_array=[],cipher_key=""):
             xor_bit += str(int(right_nibble[i][i2])^int(binary_permuted_key[0][i2]))
         right_nibble[i] = xor_bit
 
+    print("New key generations started ")
     binary_permuted_key[0] = EightBitsLeftShiftRotate(binary_permuted_key[0],3,1)
     binary_permuted_key[1] = EightBitsRightShiftRotate(binary_permuted_key[1],5,1)
+    print("New key generations complete !")
 
     #Second XOR operations
     for i in range(len(left_nibble)):
