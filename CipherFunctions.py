@@ -34,7 +34,7 @@ def TakeInitialPermutationString(key_text="", key_combination="0123456789"):
         print("10 Block Character data permuted \n")
 
     else :
-        lenght_text = (len(key_text)%10)
+        lenght_text = (10-(len(key_text)%10))
         key_text += backup_words[0:lenght_text]
         for i in range((Number_of_iterations//10)+1):
             for i2 in range(10):
