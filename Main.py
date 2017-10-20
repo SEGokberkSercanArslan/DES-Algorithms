@@ -15,6 +15,12 @@ from CipherFunctions import *
 
 leng = CipherTextNew(file_name="tmp.txt",key="rm")
 sec2 = CipherTextNew(file_name="mailm.txt",key="rm")
-print(len(leng))
-print(len(sec2))
+inv_per = TakeInitialPermutationBinaryCipherArray(sec2,"0516273849")
+print("Last stage inverse permutation started..")
+print(inv_per)
+inv_per = TakeInitialPermutationBinaryCipherArray(inv_per,"0246813579")
+print("Final Inverse permutation Complete !!")
+
+#print(len(leng))
+#print(len(sec2))
 #print(ReadFromFile("mailm.txt"))

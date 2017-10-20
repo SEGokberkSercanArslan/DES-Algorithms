@@ -28,7 +28,6 @@ def ReadFromFile(file_name="default.txt"):
 # Return String which contain permutation
 # Stage 2
 def TakeInitialPermutationString(key_text="", key_combination="0123456789"):
-    key_text.split()
     Number_of_iterations = len(key_text)
     permuted_text = []
 
@@ -51,6 +50,12 @@ def TakeInitialPermutationString(key_text="", key_combination="0123456789"):
 
     return "".join(permuted_text)
 
+def TakeInitialPermutationBinaryCipherArray(cipher_array=[],key_combination="0123456789"):
+    permuted_cipher_text = []
+    for i in range(len(cipher_array)//10):
+        for i2 in range(10):
+            permuted_cipher_text.append(cipher_array[int(key_combination[i2])+(i*10)])
+    return permuted_cipher_text
 
 # Returns array of binary_data
 #Düz string için değil array için düzenlenmiş revizyona git
@@ -119,7 +124,7 @@ def CipherSequence(shifted_array=[],cipher_key=""):
         else :
             right_nibble.append(shifted_array[i])
     binary_key = ConvertCharacterToBinaries(key=cipher_key)
-    binary_permuted_key = TakeInitialPermutationBinaryText(binary_key,"02561374","01346275")
+    binary_permuted_key = TakeInitialPermutationBinaryKey(binary_key,"02561374","01346275")
     #First XOR step
     for i in range(len(left_nibble)):
         xor_bit = ""
@@ -172,7 +177,7 @@ def ConvertCharacterToBinaries(key=""):
     print("2 Character key converted binary format\n")
     return binary_data
 
-def TakeInitialPermutationBinaryText(binary_text=[],key_combination_first="02461357",key_combination_last="13570246"):
+def TakeInitialPermutationBinaryKey(binary_text=[],key_combination_first="02461357",key_combination_last="13570246"):
     permutation_array = []
     for i in range(2):
         permutation_string = ""
@@ -213,3 +218,6 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
     cipher_text = CipherSequence(shifted_array=binary_plain_text_shifted,cipher_key=key)
 
     return cipher_text
+
+def DecodeCipher(binary_cipher = [],key = "ru"):
+    pass
