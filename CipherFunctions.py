@@ -13,11 +13,17 @@ from WordBinaries import *
 # Stage 1
 def ReadFromFile(file_name="default.txt"):
     data = ""
+    full_str = ""
     with open(file_name, 'r') as file:
-        for line in file:
-            data = file.read().replace('\n', '')
+        data = file.read().splitlines()
+        data = list(filter(None,data))
+        for i in range(len(data)):
+            data[i] = data[i].split()
+        for i in range(len(data)):
+            for i2 in range(len(data[i])):
+                full_str += data[i][i2]
     print("Reading data from file completed\n")
-    return data
+    return full_str
 
 # Return String which contain permutation
 # Stage 2

@@ -14,4 +14,7 @@ from CipherFunctions import *
 # CipherText(text_binary=bin_dat,key="ka")
 
 leng = CipherTextNew(file_name="tmp.txt",key="rm")
+sec2 = CipherTextNew(file_name="mailm.txt",key="rm")
 print(len(leng))
+print(len(sec2))
+#print(ReadFromFile("mailm.txt"))
