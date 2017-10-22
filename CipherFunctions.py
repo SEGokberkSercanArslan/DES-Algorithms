@@ -220,4 +220,23 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
     return cipher_text
 
 def DecodeCipher(binary_cipher = [],key = "ru"):
-    pass
+    "Stage 1: Preparing reverse stages"
+    key = ConvertCharacterToBinaries(key)
+    key_permuted = TakeInitialPermutationBinaryKey(key,key_combination_first="02461357",key_combination_last="13570246")
+    key_1_left   = key_permuted[0]
+    key_2_right  = key_permuted[1]
+    key_1_left_shifted =EightBitsLeftShiftRotate(key_1_left,3,1)
+    key_2_right_shifted=EightBitsRightShiftRotate(key_2_right,5,1)
+    left_nible = []
+    right_nible= []
+    Stage1= TakeInitialPermutationBinaryCipherArray(binary_cipher,"0246813579")
+    for i in range(len(Stage1)):
+        if i %2 == 1:
+            left_nible.append(Stage1[i])
+        else :
+            right_nible.append(Stage1[i])
+    "Stage 2, Reverse Stages"
+
+
+
+    return Stage1
