@@ -1,12 +1,5 @@
 from WordBinaries import *
 
-#Notları bu kısıma al ve çalışmaya hazır hale getir
-#Stage 1 Reading data düz string olarak veriyi çıkarıyor arada boşluklar var array değil
-#DefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefaultDefault Default  Default
-#Stage 2 text permüte edilmiş durumda ve düz string formunda hala
-#Stage 3 de artık 8 bit uzunluğunda her bir elemanı olan array çıkıyor
-#Stage 4 her bir elemanı 8 bit uzunluğunda ve shiftlenmiş olarak duruyor
-
 
 # Return string of reading elements
 # Stage 1
@@ -57,7 +50,6 @@ def TakeInitialPermutationBinaryCipherArray(cipher_array=[],key_combination="012
     return permuted_cipher_text
 
 # Returns array of binary_data
-#Düz string için değil array için düzenlenmiş revizyona git
 # Stage 3
 def ConvertDataToBinaries(data=""):
     binary_data =[]
@@ -71,6 +63,7 @@ def ConvertDataToBinaries(data=""):
 
 # Right Shift rotate 8 bit binaries
 # Stage 4
+# if iteration = None it tooks lenght of array else it iterates declared number.
 def EightBitsRightShiftRotate(eight_data=[],shift_ratio=None,iteration=None):
     shift_list = []
     if iteration == None:
@@ -296,8 +289,8 @@ def DecodeCipher(binary_cipher = [],key = "ru"):
         right_nibble[i] = xor_bit
     print("Stage 3 : Second reverse XOR operations completed !")
     "ReUnion nibbles in a list"
-    print(right_nibble)
-    print(left_nibble)
+    print("Right nibble :".format(right_nibble))
+    print("Left nibble :".format(right_nibble))
     union_nible = []
     right_counter = 0
     left_counter = 0
