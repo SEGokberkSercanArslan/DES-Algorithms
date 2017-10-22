@@ -10,6 +10,7 @@ print("Cipher Text Finished")
 print("Decode started")
 decode_stage = DecodeCipher(inv_per,"rm")
 print(decode_stage)
+print(len(decode_stage))
 
 #print("Last stage inverse permutation started..")
 #print(inv_per)

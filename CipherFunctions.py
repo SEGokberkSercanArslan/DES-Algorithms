@@ -177,7 +177,7 @@ def ConvertCharacterToBinaries(key=""):
     print("2 Character key converted binary format\n")
     return binary_data
 
-def TakeInitialPermutationBinaryKey(binary_text=[],key_combination_first="02461357",key_combination_last="13570246"):
+def TakeInitialPermutationBinaryKey(binary_text=[],key_combination_first="",key_combination_last=""):
     permutation_array = []
     for i in range(2):
         permutation_string = ""
@@ -222,21 +222,54 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
 def DecodeCipher(binary_cipher = [],key = "ru"):
     "Stage 1: Preparing reverse stages"
     key = ConvertCharacterToBinaries(key)
-    key_permuted = TakeInitialPermutationBinaryKey(key,key_combination_first="02461357",key_combination_last="13570246")
+    key_permuted = TakeInitialPermutationBinaryKey(key,"02561374","01346275")
     key_1_left   = key_permuted[0]
     key_2_right  = key_permuted[1]
     key_1_left_shifted =EightBitsLeftShiftRotate(key_1_left,3,1)
     key_2_right_shifted=EightBitsRightShiftRotate(key_2_right,5,1)
-    left_nible = []
-    right_nible= []
+    left_nibble = []
+    right_nibble= []
     Stage1= TakeInitialPermutationBinaryCipherArray(binary_cipher,"0246813579")
     for i in range(len(Stage1)):
         if i %2 == 1:
-            left_nible.append(Stage1[i])
+            left_nibble.append(Stage1[i])
         else :
-            right_nible.append(Stage1[i])
+            right_nibble.append(Stage1[i])
     "Stage 2, Reverse Stages"
+    for i in range(len(left_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(left_nibble[i][i2]) ^ int(key_1_left_shifted[i2]))
+        left_nibble[i] = xor_bit
+    for i in range(len(right_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(right_nibble[i][i2]) ^ int(key_2_right_shifted[i2]))
+        right_nibble[i] = xor_bit
+    "Use normal permuted keys now"
+    for i in range(len(left_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(left_nibble[i][i2])^int(key_2_right[i2]))
+        left_nibble[i] = xor_bit
+    for i in range(len(right_nibble)):
+        xor_bit = ""
+        for i2 in range(8):
+            xor_bit += str(int(right_nibble[i][i2])^int(key_1_left[i2]))
+        right_nibble[i] = xor_bit
+    "ReUnion nibbles in a list"
+    union_nible = []
+    for i in range(len(right_nibble+left_nibble)):
+        right_counter = 0
+        left_counter  = 0
+        if i % 2 == 1:
+            union_nible.append(left_nibble[left_counter])
+            left_counter+=1
+        else:
+            union_nible.append(right_nibble[right_counter])
+            right_counter+=1
+    "Reverse shift operation"
+    union_nible = EightBitsLeftShiftRotate(union_nible,4)
 
 
-
-    return Stage1
+    return union_nible
