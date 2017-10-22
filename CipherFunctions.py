@@ -6,7 +6,6 @@ from WordBinaries import *
 #Stage 2 text permüte edilmiş durumda ve düz string formunda hala
 #Stage 3 de artık 8 bit uzunluğunda her bir elemanı olan array çıkıyor
 #Stage 4 her bir elemanı 8 bit uzunluğunda ve shiftlenmiş olarak duruyor
-#
 
 
 # Return string of reading elements
@@ -112,8 +111,7 @@ def EightBitsLeftShiftRotate(eight_data=[],shift_ratio=None,iteration=None):
 
 # Stage 5
 def CipherSequence(shifted_array=[],cipher_key=""):
-    print("Lenght of Shifted array in cipher sequence {}".format(len(shifted_array)))
-    print("Stage 5")
+    print("Stage 5 : Cipher plain binary text file")
     left_nibble  = []
     right_nibble = []
     union_text = []
@@ -140,10 +138,10 @@ def CipherSequence(shifted_array=[],cipher_key=""):
         for i2 in range(8):
             xor_bit += str(int(right_nibble[i][i2])^int(binary_permuted_key[0][i2]))
         right_nibble[i] = xor_bit
-    print("Lenght of left nibble = {}".format(len(left_nibble)))
-    print("Lenght of right nibble = {}".format(len(right_nibble)))
-    print(left_nibble)
-    print(right_nibble)
+    print("First XOR operations are complete !")
+    print("Left nibble {}".format(left_nibble))
+    print("Right nibble {}".format(right_nibble))
+
 
     print("New key generations started ")
     binary_permuted_key[0] = EightBitsLeftShiftRotate(binary_permuted_key[0],3,1)
@@ -162,11 +160,9 @@ def CipherSequence(shifted_array=[],cipher_key=""):
         for i2 in range(8):
             xor_bit += str(int(right_nibble[i][i2]) ^ int(binary_permuted_key[1][i2]))
         right_nibble[i] = xor_bit
-    print("Lenght of left nibble = {}".format(len(left_nibble)))
-    print("Lenght of right nibble = {}".format(len(right_nibble)))
-
-    print(left_nibble)
-    print(right_nibble)
+    print("Second XOR operations are complete !")
+    print("Left nibble {}".format(left_nibble))
+    print("Right nibble {}".format(right_nibble))
     print("XOR operations complete...")
 
     #re-produce text togather
@@ -182,6 +178,7 @@ def CipherSequence(shifted_array=[],cipher_key=""):
             right_counter += 1
         #union_text.append(right_nibble[i])
         #union_text.append(left_nibble[i])
+    print("Reproduction of cipher binary text complete")
     print(union_text)
 
     return union_text
@@ -229,19 +226,19 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
 
     #Call Stage 1
     plain_text = ReadFromFile(file_name=file_name)
-    print("Stage 1")
+    print("Stage 1 : Read plain text from file")
     print(plain_text)
     #Call Stage 2
     permuted_plain_text = TakeInitialPermutationString(key_text=plain_text,key_combination="0246813579")
-    print("Stage 2")
+    print("Stage 2 : Take initial Permutation of text for 10 character")
     print(permuted_plain_text)
     #Call Stage 3
     binary_plain_text_data_permuted = ConvertDataToBinaries(data=permuted_plain_text)
-    print("Stage 3")
+    print("Stage 3 : Convert plain text to binary format")
     print(binary_plain_text_data_permuted)
     #Call Stage 4
     binary_plain_text_shifted = EightBitsRightShiftRotate(eight_data=binary_plain_text_data_permuted,shift_ratio=4)
-    print("Stage 4")
+    print("Stage 4 : Perform 8 bit right shift rotate operation for plain binary text")
     print(binary_plain_text_shifted)
     #Call Stage 5
     cipher_text = CipherSequence(shifted_array=binary_plain_text_shifted,cipher_key=key)
@@ -250,7 +247,7 @@ def CipherTextNew(file_name = "Default.txt",key="ru",):
 
 def DecodeCipher(binary_cipher = [],key = "ru"):
     "Stage 1: Preparing reverse stages"
-    print("Lenght of binary cipher = {}".format(len(binary_cipher)))
+    print("Preparing required keys and varribles for decipher operation")
     binary_key = ConvertCharacterToBinaries(key=key)
     binary_permuted_key = TakeInitialPermutationBinaryKey(binary_key, "02561374", "01346275")
     binary_permuted_key[0] = EightBitsLeftShiftRotate(binary_permuted_key[0], 3, 1)
@@ -259,6 +256,7 @@ def DecodeCipher(binary_cipher = [],key = "ru"):
     left_nibble = []
     right_nibble= []
     Stage1= TakeInitialPermutationBinaryCipherArray(binary_cipher,"0246813579")
+    print("Stage 1 : Initial permutation operations completed !")
 
     "Separate Nibbles"
     for i in range(len(Stage1)):
@@ -266,7 +264,7 @@ def DecodeCipher(binary_cipher = [],key = "ru"):
             left_nibble.append(Stage1[i])
         else :
             right_nibble.append(Stage1[i])
-
+    print("Left and Right nibbles created")
 
     "Stage 2, Reverse Stages"
     for i in range(len(left_nibble)):
@@ -279,9 +277,11 @@ def DecodeCipher(binary_cipher = [],key = "ru"):
         for i2 in range(8):
             xor_bit += str(int(right_nibble[i][i2]) ^ int(binary_permuted_key[1][i2]))
         right_nibble[i] = xor_bit
+    print("Stage 2 : Fist reverse XOR operations completed !")
 
     binary_permuted_key[0]=EightBitsRightShiftRotate(binary_permuted_key[0],3,1)
     binary_permuted_key[1]=EightBitsLeftShiftRotate(binary_permuted_key[1],5,1)
+    print("Reverse keys Generated !")
 
     "Use normal permuted keys now"
     for i in range(len(left_nibble)):
@@ -294,6 +294,7 @@ def DecodeCipher(binary_cipher = [],key = "ru"):
         for i2 in range(8):
             xor_bit += str(int(right_nibble[i][i2])^int(binary_permuted_key[0][i2]))
         right_nibble[i] = xor_bit
+    print("Stage 3 : Second reverse XOR operations completed !")
     "ReUnion nibbles in a list"
     print(right_nibble)
     print(left_nibble)
@@ -307,9 +308,10 @@ def DecodeCipher(binary_cipher = [],key = "ru"):
         else:
             union_nible.append(right_nibble[right_counter])
             right_counter+=1
+    print("Stage 4 : List re-created !")
     "Reverse shift operation"
     union_nible = EightBitsLeftShiftRotate(union_nible,4)
-    print(len(union_nible))
+    print("Stage 5 : Reverse shift binary operations completed !")
     "Convert binary to characters"
     for i in range(len(union_nible)):
         union_nible[i] = reverse_word_binaries[union_nible[i]]
@@ -319,5 +321,5 @@ def DecodeCipher(binary_cipher = [],key = "ru"):
     for i in range(len(union_nible)):
         union_string += union_nible[i]
     deciphered_text = TakeInitialPermutationString(union_string,"0516273849")
-    print(deciphered_text)
-    return union_nible
+    print("Reverse permutation and binary to character conversation completed !")
+    return deciphered_text
